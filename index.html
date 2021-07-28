@@ -17,14 +17,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script>
-        window.onload = function () {
-          document
-            .querySelector("button")
-            .addEventListener("click", function () {
-                open('https://www.instagram.com/kingsname/');
-            });
-        };
-      </script>
+        AFRAME.registerComponent('clinkhandler', {
+            init: function () {
+                this.el.addEventListener('click', function (evt) {
+                    open('https://www.instagram.com/kingsname/');
+                });
+            }
+        })
+    </script>
 
     <style>
         .fa {
@@ -107,7 +107,10 @@
         arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;" id="scene" embedded gesture-detector>
         <a-assets>
             <a-asset-item id="animated-asset" src="assets/asset_origin.glb"></a-asset-item>
+        </a-assets>
 
+        <a-assets>
+            <img id="instagram" src="./assets/instagram.png">
         </a-assets>
 
         <a-marker id="animated-marker" type="pattern" preset="custom" url="assets/marker.patt"
@@ -115,12 +118,15 @@
             <a-entity id="bowser-model" position="0 0 0" scale="0.3 0.3 0.3" rotation="-90 0 0"
                 animation-mixer="loop: repeat" gltf-model="#animated-asset" class="clickable" gesture-handler>
             </a-entity>
+            <a-circle clinkhandler id="circle" src="#instagram" radius="0.2" rotation="-90 0 0" material="side: double"
+                position="0 0 0.58"></a-circle>
         </a-marker>
 
-        <a-entity camera></a-entity>
+        <a-entity camera>
+            <a-cursor color="red" geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"></a-cursor>
+        </a-entity>
     </a-scene>
 
-    <button class="fa fa-instagram"></button>
 
 
 </body>
